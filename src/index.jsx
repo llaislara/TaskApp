@@ -1,9 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import TodoList from './TodoList'
+const express = require('express');
+const app = express();
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <TodoList />
-  </React.StrictMode>
-)
+app.use(express.static('public', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js') || path.endsWith('.jsx')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
+
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
